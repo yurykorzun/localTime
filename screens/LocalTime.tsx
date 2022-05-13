@@ -50,7 +50,7 @@ export default function LocalTime() {
   return (
     <View style={styles.container}>
       {isFailed && <ErrorMessage />}
-      <View style={{ width: 200, marginBottom: 10 }}>
+      <View style={styles.inputs}>
         <LocationInput
           name={"Latitude:"}
           value={longitude}
@@ -106,6 +106,10 @@ export default function LocalTime() {
 }
 
 const styles = StyleSheet.create({
+  inputs: {
+    width: 200,
+    marginBottom: 10
+  },
   container: {
     flex: 1,
     alignItems: "center",
