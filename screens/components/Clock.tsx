@@ -44,7 +44,7 @@ export default function Clock({ timezone }: { timezone: string }) {
 
   return (
     <View>
-      <Text>Current Time: {formattedDateTime}</Text>
+      <Text style={{fontSize: 16, fontWeight: "bold"}}>{formattedDateTime}</Text>
     </View>
   );
 }

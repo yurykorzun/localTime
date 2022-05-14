@@ -42,7 +42,7 @@ export default function LocalTime() {
   };
 
   const onShowCurrentTime = () => {
-    if (longitude && latitude) {
+    if (!!longitude && !!latitude) {
       dispatch(getCurrentZone({ longitude, latitude }));
     }
   };
@@ -50,51 +50,44 @@ export default function LocalTime() {
   return (
     <View style={styles.container}>
       {isFailed && <ErrorMessage />}
-      <View style={styles.inputs}>
-        <LocationInput
-          name={"Latitude:"}
-          value={longitude}
-          onChange={setLongitude}
-        />
-        <LocationInput
-          name={"Longitude:"}
-          value={latitude}
-          onChange={setLatitude}
-        />
-      </View>
-
-      <View style={{ marginBottom: 10 }}>
-        <TouchableOpacity
-          style={{
-            padding: 10,
-            backgroundColor: "#6AB2FA",
-            borderRadius: 5,
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-
-            elevation: 5,
-          }}
-          onPress={onShowCurrentTime}
-        >
+      <View style={styles.formContainer}>
+        <View style={styles.title}>
+          <Text style={styles.titleText}>Enter a location</Text>
+        </View>
+        <View style={styles.inputs}>
+          <LocationInput
+            name={"Latitude:"}
+            value={longitude}
+            onChange={setLongitude}
+          />
+          <LocationInput
+            name={"Longitude:"}
+            value={latitude}
+            onChange={setLatitude}
+          />
+        </View>
+        <TouchableOpacity style={styles.button} onPress={onShowCurrentTime}>
           <Text>Show current time</Text>
         </TouchableOpacity>
       </View>
 
-      {(!isFailed && currentZone && !!currentZone.zoneName) && (
-        <>
-          <View>
-            <Text>Timezone {currentZone.zoneName}</Text>
+      <View style={styles.resultContainer}>
+        {!isFailed && currentZone && !!currentZone.zoneName && (
+          <View
+            style={styles.result}
+          >
+            <View style={styles.zone}>
+              <Text>Timezone: {currentZone.zoneName}</Text>
+            </View>
+            <View>
+              <Text>Time in {currentZone.countryName}</Text>
+            </View>
+            <View style={styles.clock}>
+              <Clock timezone={currentZone.zoneName} />
+            </View>
           </View>
-          <View style={styles.clock}>
-            <Clock timezone={currentZone.zoneName} />
-          </View>
-        </>
-      )}
+        )}
+      </View>
 
       {isLoading && (
         <View style={styles.loadingIndicator}>
@@ -106,30 +99,66 @@ export default function LocalTime() {
 }
 
 const styles = StyleSheet.create({
+  zone: {
+    marginBottom: 10,
+  },
+  resultContainer: {
+    height: 100,
+    width: "100%",
+  },
+  result: {
+    flex: 1,
+    backgroundColor: "#bee9e8",
+    borderWidth: 1,
+    borderColor: "#62b6cb",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderTopWidth: 0,
+    padding: 10,
+  },
+  titleText: {
+    fontSize: 16,
+  },
+  title: {
+    paddingBottom: 20,
+    alignItems: "center",
+  },
+  formContainer: {
+    borderWidth: 1,
+    padding: 5,
+    alignItems: "center",
+    backgroundColor: "#bee9e8",
+    width: "100%",
+    borderColor: "#62b6cb",
+  },
+  button: {
+    padding: 10,
+    backgroundColor: "#5fa8d3",
+    borderRadius: 5,
+    borderColor: "#1b4965",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+  },
   inputs: {
-    width: 200,
-    marginBottom: 10
+    marginBottom: 10,
+    width: 150,
   },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  button: {
-    padding: 10,
-    backgroundColor: "#6AB2FA",
-    borderRadius: 5,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    backgroundColor: "#cae9ff",
   },
   clock: {
-    margin: 10,
+    padding: 10,
   },
   loadingIndicator: {
     ...StyleSheet.absoluteFillObject,

@@ -12,29 +12,39 @@ export default function LocationInput({
 }) {
   return (
     <View style={styles.container}>
-      <View style={{ marginBottom: 5 }}>
-        <Text>{name}</Text>
+      <View style={styles.input}>
+        <Text style={styles.label}>{name}</Text>
+        <TextInput
+          value={value}
+          placeholder={name}
+          keyboardType="numeric"
+          onChangeText={onChange}
+          style={styles.textInput}
+        />
       </View>
-      <TextInput
-        value={value}
-        placeholder={name}
-        keyboardType="numeric"
-        onChangeText={onChange}
-        style={styles.textInput}
-      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  label: {
+    paddingRight: 5,
+  },
+  input: {
+    marginBottom: 5,
+    flexDirection: "row",
+    alignItems: "center",
+  },
   container: {
     marginBottom: 10,
+    alignItems: "flex-end",
   },
   textInput: {
     backgroundColor: "#F1F1F1",
-    height: 40,
-    padding: 10,
+    height: 35,
+    padding: 5,
     borderWidth: 1,
     borderRadius: 5,
+    width: 120,
   },
 });
